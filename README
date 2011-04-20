@@ -1,0 +1,14 @@
+This program was created out of frustration of having to do a volume of 
+calculations that could warrent a spreadsheet but having to check how many 
+significant figures each answer needed for OSU's BIOC 3723-BIOCHEMICAL 
+LABORATORY.
+
+This is written in javascript and designed for google docs spreadsheet 
+but could also work with open office. 
+
+When this project is finished we will have functions to. 
+a. Get the number of signigicant figures in a number.
+b. Add two numbers and decide how many significant figures to output.
+c. Subtract two numbers and decide how many significant figures to output.
+d. Multiply two numbers and decide how many significant figures to output.
+e. Divide two numbers and decide how many significant figures to output.
