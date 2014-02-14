@@ -1,3 +1,5 @@
+
+
 function getSigFigs(number) 
 {
    /*This function will retrive the number of significant digits from a string or
@@ -427,6 +429,11 @@ function sfSUB(x1,x2)
    } 
    return finalStr+"e"+sign+expnt
 }
+
+
+//nice tutoiral
+//http://nodeguide.com/beginner.html#hello-world-tutorial
+console.log(  countSigFigs("3.13500") );
 
 
 
