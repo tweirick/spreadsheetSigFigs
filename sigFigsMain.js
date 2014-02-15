@@ -1,118 +1,24 @@
 
 
-function getSigFigs(number) 
-{
-   /*This function will retrive the number of significant digits from a string or
-   numerical input. The formatting rules of google docs will cause the input to allways
-   start with either zero or a non-zero integer. after this can be a decimal or any 0-9 
-   digit. The end of entries 0-9 will be preserved as long as a decimal is not present */
-  
-   //sub function
-   function getNumOfSigs(n)
-   {
-     
-      //removes insignificant varibles at the start of the string
-      //ex: 0.001->.001 ex2: 00100.00 ||n.charAt(0)=="."
-      //while(n.charAt(0)=="0" && n.length!=0)
-      //{
-      //   n=n.slice(1,n.length)
-      //}//POSTCOND: string starts with a decimal or significant number.
-      
-      n = stripZeros(n);
-     
-      if(n.charAt(0)!=".")
-      {
-        //count using normal significance algorithm until reaching end or
-        // reaching a decimal then use decimal significance algorithm
-        if(n.charAt(n.length-1)==".")
-        {//for ints with a final decimal ex 100.
-            return countSigFigs(n); 
-        } 
-        else
-        {//     
-          i = countSigFigs(n);
-          
-          n = stripUntil(n);
-          if(n!="")
-          {  
-              j = decimalSigFigCnt(n,1);
-              //return i+"#"+n+"#"+j;
-              return (i+j);
-          }
-          else
-          {
-            //return i+"#"+n
-            return (i);
-          }
-        }     
-      }
-      else
-      {//then count using decimal significance algorithm
-         n = stripUntil(n);
-         //return "#"+n;
-         return decimalSigFigCnt(n,0);
-      }     
-   }  
 
-   if(typeof(number)=="string")
-   {
-      return getNumOfSigs(number);
-   }
-   else if(typeof(number)=="number")
-   {
-      return getNumOfSigs(number+'');
-   } 
-}
-
-
-function countSigFigs(st)
+function countSigFigs(number)
 {  
-   function recurCount(str)
-   {
-      /*This will end in either an empty string or a decimal.
-      .in the event of the decimal all memebers on the string will
-      be significant. In the event of an empty string ending all 
-      entries between the first and last non-zero numbers will be 
-      significant
-      */
-      str=str+""//ensure input is a string.     
-      c = str.charAt(0);
-      str = str.slice(1,str.length); 
+    var number_str = number.toString();
 
-      if(c == "")
-      {
-          return 0;
-      }
-      else if(c == ".")
-      {
-          return 1;
-      } 
-      else//c==digit
-      {
-          isSig=0;     
-          if(c==0)
-          {
-             if(recurCount(str)>0){isSig=1;} 
-          }
-          else{   isSig=1;} 
-          return (isSig+recurCount(str)); 
-      } 
-   }
-   csfi=0 
-   
-   for (i=0;i<=5;i++)
-   {//Since I am dumb I can't think of a way to not count decimals
-     if(st.charAt(i)=='.')
-     {
-      csfi=1;
-      break;
-     }
+    console.log(number_str.length);
 
-   }
-   if(csfi==1){return (recurCount(st)-1);}
-   return recurCount(st);
+    //First Non-Zero
+    //Decimal
+
+    for (i=0; i < number_str.length; i++)
+    {
+        console.log(number_str[i] );
+    }
+
 }
 
+
+countSigFigs("123.5");
 
 
 function decimalSigFigCnt(s,isIntBool)
@@ -433,7 +339,6 @@ function sfSUB(x1,x2)
 
 //nice tutoiral
 //http://nodeguide.com/beginner.html#hello-world-tutorial
-console.log(  countSigFigs("3.13500") );
 
 
 
