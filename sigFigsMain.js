@@ -5,20 +5,38 @@ function countSigFigs(number)
 {  
     var number_str = number.toString();
 
-    console.log(number_str.length);
 
     //First Non-Zero
     //Decimal
+    var past_decimal  = false;
+    var first_nonzero = false;
+    var sigfig_cnt = 0;
+    
 
     for (i=0; i < number_str.length; i++)
-    {
-        console.log(number_str[i] );
-    }
+    {  
+        
+        if (number_str[i] != "." & number_str[i] != "0") { 
+            first_nonzero = true;
+        }
+        
 
+        if (number_str[i] == ".") {
+            past_decimal = true;
+        }
+        else {
+                
+            if (first_nonzero) {
+                sigfig_cnt++;
+            }
+        }
+         
+    }
+    return sigfig_cnt;
 }
 
 
-countSigFigs("123.5");
+console.log( countSigFigs("0.00052") ) ;
 
 
 function decimalSigFigCnt(s,isIntBool)
