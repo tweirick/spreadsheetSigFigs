@@ -4,15 +4,12 @@
 function countSigFigs(number)
 {  
     var number_str = number.toString();
-
-
     //First Non-Zero
     //Decimal
     var past_decimal  = false;
     var first_nonzero = false;
     var sigfig_cnt = 0;
     
-
     for (i=0; i < number_str.length; i++)
     {  
         
@@ -20,7 +17,6 @@ function countSigFigs(number)
             first_nonzero = true;
         }
         
-
         if (number_str[i] == ".") {
             past_decimal = true;
         }
@@ -36,47 +32,32 @@ function countSigFigs(number)
 }
 
 
-console.log( countSigFigs("0.00052") ) ;
-
-
-function decimalSigFigCnt(s,isIntBool)
+function sfadd(x,y)
 {
-  //s is a string and isIntBool is an int
-  //where 1 is true and 0 is false
-  s=s+""
-  if(isIntBool==1)
-  {
-     return s.length
-  }   
-  else
-  {
-     s = stripZeros(s)
-     return s.length  
-  }
-}
-
-
-function stripZeros(n)//where in is a string
-{
-   n=n+""//convert n to string is not allready string.
-   while(n.charAt(0)=="0" && n.length!=0)
-   {
-      n=n.slice(1,n.length)
-   }//POSTCOND: string starts with a decimal or significant number.
-   return n
-}
-
-function stripUntil(n)//where in is a string
-{
-   n=n+""//convert n to string is not allready string.
-   while(n.charAt(0)!="." && n.length!=0) 
-   {
-      n=n.slice(1,n.length)
+   var sigfigs_in_x = countSigFigs(x);
+   var sigfigs_in_y = countSigFigs(y);
+   
+   var output_sigfigs = sigfigs_in_y;
+   if (sigfigs_in_x < sigfigs_in_y) {
+       output_sigfigs = sigfigs_in_x;    
    }
-   //POSTCOND: string starts with a decimal or significant number.
-   n=n.slice(1,n.length)
-   return n
+   
+   
 }
+
+
+console.log( "0.00052" ) ;
+console.log( countSigFigs("0.00052") ) ;
+console.log( "1.00052" ) ;
+console.log( countSigFigs("1.00052") );
+console.log( "1.052000" ) ;
+console.log( countSigFigs("1.052000") );
+
+
+
+
+
+
 
 
 
@@ -141,8 +122,8 @@ function addOneToEnd(numStr,place)
 
 function sfADD(x1,x2)
 {
-    sf1 = getSigFigs(x1)
-    sf2 = getSigFigs(x2)
+    sf1 = countSigFigs(x1)
+    sf2 = countSigFigs(x2)
     //x1=x1.toExponential(10)
     //x2=x2.toExponential(10)
     
@@ -252,9 +233,7 @@ function sfSUB(x1,x2)
 {
     sf1 = getSigFigs(x1)
     sf2 = getSigFigs(x2)
-    //x1=x1.toExponential(10)
-    //x2=x2.toExponential(10)
-    
+     
     x = x1-x2
     x = x.toExponential(10)
 
@@ -358,6 +337,6 @@ function sfSUB(x1,x2)
 //nice tutoiral
 //http://nodeguide.com/beginner.html#hello-world-tutorial
 
-
+console.log( sfADD(1.22,1.11111111) );
 
 
