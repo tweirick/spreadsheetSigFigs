@@ -1,342 +1,164 @@
+/*
+This is a collection of mathematical functions which preserve significant 
+figures.
 
+Functions avalible
+sfADD
+sfSUBT
+sfMULT
+sfDEVIDE
+sfSUM
+sfAVERAGE
+*/
 
-
-function countSigFigs(number)
+function cntSigFigs(number)
 {  
-    var number_str = number.toString();
-    //First Non-Zero
-    //Decimal
-    var past_decimal  = false;
-    var first_nonzero = false;
-    var sigfig_cnt = 0;
+    /*
+    Return the number of significant digits in a number.
+    */
+    var number_str    = Number(number).toString();
+    var count_sigfigs = false;
+    var sigfig_cnt    = 0;
     
     for (i=0; i < number_str.length; i++)
     {  
-        
-        if (number_str[i] != "." & number_str[i] != "0") { 
-            first_nonzero = true;
-        }
-        
-        if (number_str[i] == ".") {
-            past_decimal = true;
-        }
-        else {
-                
-            if (first_nonzero) {
+        if (number_str[i] != "." & number_str[i] != "0") 
+        { 
+            /*Leading zeros are not significant.*/
+            count_sigfigs = true;
+        } 
+        /*Once counting begins, count all */ 
+        if (count_sigfigs & number_str[i] != ".") {
                 sigfig_cnt++;
-            }
-        }
-         
+        } 
     }
     return sigfig_cnt;
 }
 
 
-function sfadd(x,y)
+function outputToSigFig(number,Xplaces)
+{ 
+    /*
+    Convert 
+    */
+    var rnd_num  = Number(number).toExponential();    
+    numb_and_exp =  rnd_num.split("e"); 
+    var num_str  = Number(numb_and_exp[0]).toFixed(Xplaces-1).toString();
+    var exp_str  = numb_and_exp[1];     
+    return num_str+"e"+exp_str;
+}
+
+
+function SFADD(x,y)
 {
-   var sigfigs_in_x = countSigFigs(x);
-   var sigfigs_in_y = countSigFigs(y);
-   
-   var output_sigfigs = sigfigs_in_y;
+   var x_num = Number( x );
+   var y_num = Number( y );
+    
+   var sigfigs_in_x = cntSigFigs(x);
+   var sigfigs_in_y = cntSigFigs(y);
+   /**/
+   var output_sf = sigfigs_in_y;
+   if (sigfigs_in_x > sigfigs_in_y) {
+       output_sf = sigfigs_in_x;    
+   }
+
+   return outputToSigFig( x_num + y_num ,output_sf);
+
+}
+
+function SFADD(x,y)
+{
+   var x_num = Number( x );
+   var y_num = Number( y ); 
+             
+   var sigfigs_in_x = cntSigFigs(x);
+   var sigfigs_in_y = cntSigFigs(y);
+   /**/
+   var output_sf = sigfigs_in_y;
+   if (sigfigs_in_x > sigfigs_in_y) {
+       output_sf = sigfigs_in_x;         
+   }
+   return outputToSigFig( x_num + y_num ,output_sf);
+}
+
+
+function SFSUB(x,y)
+{
+   var x_num = Number( x );
+   var y_num = Number( y );
+
+   var sigfigs_in_x = cntSigFigs(x);
+   var sigfigs_in_y = cntSigFigs(y);
+   /**/
+   var output_sf = sigfigs_in_y;
+   if (sigfigs_in_x > sigfigs_in_y) {
+       output_sf = sigfigs_in_x;
+   }
+   return outputToSigFig( x_num - y_num ,output_sf);
+}
+
+
+function SFSUB(x,y)
+{
+   var x_num = Number( x );
+   var y_num = Number( y );
+
+   var sigfigs_in_x = cntSigFigs(x);
+   var sigfigs_in_y = cntSigFigs(y);
+   /**/
+   var output_sf = sigfigs_in_y;
+   if (sigfigs_in_x > sigfigs_in_y) {
+       output_sf = sigfigs_in_x;
+   }
+   return outputToSigFig( x_num - y_num ,output_sf);
+}
+
+function SFMULT(x,y)
+{
+   var x_num = Number( x );
+   var y_num = Number( y );
+
+   var sigfigs_in_x = cntSigFigs(x);
+   var sigfigs_in_y = cntSigFigs(y);
+   /**/
+   var output_sf = sigfigs_in_y;
    if (sigfigs_in_x < sigfigs_in_y) {
-       output_sigfigs = sigfigs_in_x;    
+       output_sf = sigfigs_in_x;
    }
-   
-   
+   return outputToSigFig( x_num - y_num ,output_sf);
 }
 
-
-console.log( "0.00052" ) ;
-console.log( countSigFigs("0.00052") ) ;
-console.log( "1.00052" ) ;
-console.log( countSigFigs("1.00052") );
-console.log( "1.052000" ) ;
-console.log( countSigFigs("1.052000") );
-
-
-
-
-
-
-
-
-
-
-function outputToSigFig(number,toXplaces)
+function SFDIV(x,y)
 {
-    number = number+''
-    number = parseFloat(number)  
-    number = number.toExponential(10)+""
-    return number
-    //3.4500000000e+2
-    if(number.charAt(0)!="0")
-    {
-        return number
-    }
-    else
-    {
-       i=0
-       rtnS=""
-       while(number.charAt(0)!="e" && i<toXplaces) 
-       {
-          rtnS = rtnS+ number.charAt(0)
-          number=number.slice(1,number.length)
-          i=i+1
-       }
-       if(number.charAt(0)=="e" && i<toXplaces)
-       {
-          rtnS = rtnS+"0"
-          i=i+1
-       }
-       
-    }
-    return number
-}
+   var x_num = Number( x );
+   var y_num = Number( y );
 
-function setCharAt(str,index,chr) 
-{
-    if(index > str.length-1) return str;
-    return str.substr(0,index) + chr + str.substr(index+1);
-}
-
-
-function addOneToEnd(numStr,place)
-{
-   i=0
- 
-   temp = parseInt(numStr.charAt(place))+1
-   
-   if(temp<10)
-   {
-       numStr = setCharAt(numStr,place,temp+"") 
+   var sigfigs_in_x = cntSigFigs(x);
+   var sigfigs_in_y = cntSigFigs(y);
+   /**/
+   var output_sf = sigfigs_in_y;
+   if (sigfigs_in_x < sigfigs_in_y) {
+       output_sf = sigfigs_in_x;
    }
-   else
-   {   
-       /////-----------------------------if(i<0)
-       numStr = setCharAt(numStr,place,"0")  
-       numStr = addOneToEnd(numStr,place-1)
-   }
-   return numStr
-}
-
-
-function sfADD(x1,x2)
-{
-    sf1 = countSigFigs(x1)
-    sf2 = countSigFigs(x2)
-    //x1=x1.toExponential(10)
-    //x2=x2.toExponential(10)
-    
-    x = x1+x2
-    x = x.toExponential(10)
-
-    if(sf1 > sf2)
-        sf = sf2 
-    else
-        sf = sf1 
-    
-   //returnStr = cutToXSigFigs(x,sf)
-   i=0
-   shouldRound=false
-   remain="" 
-   firstChar=true
-   round=false
-    i=0
-    returnStr=""
-    while(i <= sf)    
-    {
-       if(i==0)
-       {
-          if(x.charAt(0)=="0" || x.charAt(0)==".")
-          {
-             returnStr = returnStr + x.charAt(0)
-             x=x.slice(1,x.length)
-          }
-          else
-          {
-             returnStr = returnStr + x.charAt(0)
-             x=x.slice(1,x.length)
-             i++
-          }
-       }
-       else
-       {
-          returnStr = returnStr + x.charAt(0)
-          x=x.slice(1,x.length)
-          i++
-       }
-   }
-
-   while(x.length>0 && x.charAt(0)!="e")
-   {
-          
-     //return remain 
-     
-     if(firstChar)
-     {
-        remain=x.charAt(0)
-        firstChar=false
-        if(remain>5)
-        {
-          round=true
-        }
-     }
-     x=x.slice(1,x.length)
-   } 
-   returnStr = addOneToEnd(returnStr,returnStr.length)
-    //returnStr
-    //
-    finalStr=""
-    i=0
-    while(i <= sf)    
-    {
-       if(i==0)
-       {
-          if(returnStr.charAt(0)=="0" || returnStr.charAt(0)==".")
-          {
-             finalStr = finalStr + returnStr.charAt(0)
-             returnStr=returnStr.slice(1,returnStr.length)
-          }
-          else
-          {
-             finalStr = finalStr + returnStr.charAt(0)
-             returnStr=returnStr.slice(1,returnStr.length)
-             i++
-          }
-       }
-       else
-       {
-          finalStr = finalStr + returnStr.charAt(0)
-          returnStr=returnStr.slice(1,returnStr.length)
-          i++
-       }
-   }
-
-   //slice off e
-   x=x.slice(1,x.length)
-   sign= x.charAt(0)
-   x=x.slice(1,x.length)
-  
-   expnt=""
-   while(x.length>0)
-   {
-      expnt=expnt+x.charAt(0)
-      x=x.slice(1,x.length)
-   } 
-   return finalStr+"e"+sign+expnt
-}
-
-
-
-
-function sfSUB(x1,x2)
-{
-    sf1 = getSigFigs(x1)
-    sf2 = getSigFigs(x2)
-     
-    x = x1-x2
-    x = x.toExponential(10)
-
-    if(sf1 > sf2)
-        sf = sf2 
-    else
-        sf = sf1 
-    
-   //returnStr = cutToXSigFigs(x,sf)
-   i=0
-   shouldRound=false
-   remain="" 
-   firstChar=true
-   round=false
-    i=0
-    returnStr=""
-    while(i <= sf)    
-    {
-       if(i==0)
-       {
-          if(x.charAt(0)=="0" || x.charAt(0)==".")
-          {
-             returnStr = returnStr + x.charAt(0)
-             x=x.slice(1,x.length)
-          }
-          else
-          {
-             returnStr = returnStr + x.charAt(0)
-             x=x.slice(1,x.length)
-             i++
-          }
-       }
-       else
-       {
-          returnStr = returnStr + x.charAt(0)
-          x=x.slice(1,x.length)
-          i++
-       }
-   }
-
-   while(x.length>0 && x.charAt(0)!="e")
-   {
-          
-     //return remain 
-     
-     if(firstChar)
-     {
-        remain=x.charAt(0)
-        firstChar=false
-        if(remain>5)
-        {
-          round=true
-        }
-     }
-     x=x.slice(1,x.length)
-   } 
-   returnStr = addOneToEnd(returnStr,returnStr.length)
-    //returnStr
-    //
-    finalStr=""
-    i=0
-    while(i <= sf)    
-    {
-       if(i==0)
-       {
-          if(returnStr.charAt(0)=="0" || returnStr.charAt(0)==".")
-          {
-             finalStr = finalStr + returnStr.charAt(0)
-             returnStr=returnStr.slice(1,returnStr.length)
-          }
-          else
-          {
-             finalStr = finalStr + returnStr.charAt(0)
-             returnStr=returnStr.slice(1,returnStr.length)
-             i++
-          }
-       }
-       else
-       {
-          finalStr = finalStr + returnStr.charAt(0)
-          returnStr=returnStr.slice(1,returnStr.length)
-          i++
-       }
-   }
-
-   //slice off e
-   x=x.slice(1,x.length)
-   sign= x.charAt(0)
-   x=x.slice(1,x.length)
-  
-   expnt=""
-   while(x.length>0)
-   {
-      expnt=expnt+x.charAt(0)
-      x=x.slice(1,x.length)
-   } 
-   return finalStr+"e"+sign+expnt
+   return outputToSigFig( x_num - y_num ,output_sf);
 }
 
 
 //nice tutoiral
 //http://nodeguide.com/beginner.html#hello-world-tutorial
 
-console.log( sfADD(1.22,1.11111111) );
+console.log( "0.00052" ) ;
+console.log( cntSigFigs("000.00052") ) ;
+console.log( "1.00052" ) ;
+console.log( cntSigFigs("010.00052") );
+console.log( "1.00052e+1" ) ;
+console.log( cntSigFigs("1.000052e+1") );
+
+console.log( SFADD("8.002e+1","10.52") );
+
+console.log( SFSUB("8.002e+1","10.52") );
+
+
+
 
 
