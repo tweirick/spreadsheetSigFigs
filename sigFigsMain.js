@@ -66,22 +66,6 @@ function SFADD(x,y)
 
 }
 
-function SFADD(x,y)
-{
-   var x_num = Number( x );
-   var y_num = Number( y ); 
-             
-   var sigfigs_in_x = cntSigFigs(x);
-   var sigfigs_in_y = cntSigFigs(y);
-   /**/
-   var output_sf = sigfigs_in_y;
-   if (sigfigs_in_x > sigfigs_in_y) {
-       output_sf = sigfigs_in_x;         
-   }
-   return outputToSigFig( x_num + y_num ,output_sf);
-}
-
-
 function SFSUB(x,y)
 {
    var x_num = Number( x );
@@ -97,21 +81,6 @@ function SFSUB(x,y)
    return outputToSigFig( x_num - y_num ,output_sf);
 }
 
-
-function SFSUB(x,y)
-{
-   var x_num = Number( x );
-   var y_num = Number( y );
-
-   var sigfigs_in_x = cntSigFigs(x);
-   var sigfigs_in_y = cntSigFigs(y);
-   /**/
-   var output_sf = sigfigs_in_y;
-   if (sigfigs_in_x > sigfigs_in_y) {
-       output_sf = sigfigs_in_x;
-   }
-   return outputToSigFig( x_num - y_num ,output_sf);
-}
 
 function SFMULT(x,y)
 {
@@ -125,7 +94,7 @@ function SFMULT(x,y)
    if (sigfigs_in_x < sigfigs_in_y) {
        output_sf = sigfigs_in_x;
    }
-   return outputToSigFig( x_num - y_num ,output_sf);
+   return outputToSigFig( x_num * y_num ,output_sf);
 }
 
 function SFDIV(x,y)
@@ -140,9 +109,8 @@ function SFDIV(x,y)
    if (sigfigs_in_x < sigfigs_in_y) {
        output_sf = sigfigs_in_x;
    }
-   return outputToSigFig( x_num - y_num ,output_sf);
+   return outputToSigFig( x_num / y_num ,output_sf);
 }
-
 
 //nice tutoiral
 //http://nodeguide.com/beginner.html#hello-world-tutorial
@@ -158,7 +126,8 @@ console.log( SFADD("8.002e+1","10.52") );
 
 console.log( SFSUB("8.002e+1","10.52") );
 
+console.log( SFMULT("8.002e+1","10.52") );
 
-
+console.log( SFDIV("8.002e+1","10.52") );
 
 
