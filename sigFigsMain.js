@@ -11,12 +11,19 @@ sfSUM
 sfAVERAGE
 */
 
-function cntSigFigs(number)
+var this.cntSigFigs = function(number)
 {  
     /*
     Return the number of significant digits in a number.
     */
-    var number_str    = Number(number).toString();
+
+    if (typeof(number) == "number") {
+        var number_str    = number.toString();
+    }
+    else {
+        var number_str    = number;
+    }
+
     var count_sigfigs = false;
     var sigfig_cnt    = 0;
     
@@ -84,6 +91,7 @@ function SFSUB(x,y)
 
 function SFMULT(x,y)
 {
+   
    var x_num = Number( x );
    var y_num = Number( y );
 
@@ -104,30 +112,27 @@ function SFDIV(x,y)
 
    var sigfigs_in_x = cntSigFigs(x);
    var sigfigs_in_y = cntSigFigs(y);
+
    /**/
    var output_sf = sigfigs_in_y;
    if (sigfigs_in_x < sigfigs_in_y) {
        output_sf = sigfigs_in_x;
    }
+
    return outputToSigFig( x_num / y_num ,output_sf);
 }
 
 //nice tutoiral
 //http://nodeguide.com/beginner.html#hello-world-tutorial
-
 console.log( "0.00052" ) ;
 console.log( cntSigFigs("000.00052") ) ;
 console.log( "1.00052" ) ;
 console.log( cntSigFigs("010.00052") );
 console.log( "1.00052e+1" ) ;
 console.log( cntSigFigs("1.000052e+1") );
-
 console.log( SFADD("8.002e+1","10.52") );
-
 console.log( SFSUB("8.002e+1","10.52") );
-
-console.log( SFMULT("8.002e+1","10.52") );
-
-console.log( SFDIV("8.002e+1","10.52") );
+console.log( SFMULT(8.002e+1,"10.52") );
+console.log( SFDIV("8.002e+1",10.52) );
 
 
